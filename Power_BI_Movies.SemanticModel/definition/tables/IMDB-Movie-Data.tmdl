@@ -1,0 +1,164 @@
+table IMDB-Movie-Data
+	lineageTag: da59ae7a-eaef-4ea3-9bc4-7324a9457ea5
+
+	measure 'Total Movies' = DISTINCTCOUNT('IMDB-Movie-Data'[Rank])
+		formatString: 0
+		lineageTag: ad2e4e46-8cb7-496c-bebe-d4a17017927b
+
+	measure 'Genres Count' = DISTINCTCOUNT('IMDB-Movie-Data'[Genre])
+		formatString: 0
+		lineageTag: 5b97472b-f43c-4d8c-9294-56d00bb99a72
+
+	measure 'Average Rating' = AVERAGE('IMDB-Movie-Data'[Rating])
+		lineageTag: 674a508d-0507-462f-a230-ba621157c84b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Highest Rated Genre' =
+			
+			TOPN(1,
+			    ALL('IMDB-Movie-Data'[Genre]),
+			    [Average Rating],
+			    DESC
+			)
+		lineageTag: 5d1fefa0-0e67-4d96-a27d-63dac5e750a4
+
+	measure 'Common Genre' = ```
+			
+			TOPN(
+			    1,
+			    ALL('IMDB-Movie-Data'[Genre]),
+			    [Total Movies],
+			    DESC
+			)
+			
+			```
+		lineageTag: 7ff81ae6-0d86-4b5e-b6fc-818ceb322abf
+
+	column Rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ddc7858-dcb7-4bba-84ba-74c8bde3c800
+		summarizeBy: none
+		sourceColumn: Rank
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: 8a13d835-f375-471b-a61c-10fcecba90a1
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column Description
+		dataType: string
+		lineageTag: 97544cc5-c5ac-4b26-b6bc-5a431a9edf4b
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column Director
+		dataType: string
+		lineageTag: dbf02731-0d54-4917-8e15-5f93c33e0ae5
+		summarizeBy: none
+		sourceColumn: Director
+
+		annotation SummarizationSetBy = Automatic
+
+	column Actors
+		dataType: string
+		lineageTag: d8d97688-fde3-4635-8af2-6720876c95f2
+		summarizeBy: none
+		sourceColumn: Actors
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 27c32631-6eb4-4e83-9f1e-d7e2539dbeb2
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Runtime (Minutes)'
+		dataType: int64
+		formatString: 0
+		lineageTag: c4fd7ede-030c-44ad-b0c3-526e0f1a48b6
+		summarizeBy: sum
+		sourceColumn: Runtime (Minutes)
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rating
+		dataType: double
+		lineageTag: cedb15a0-fdb1-499a-bd60-785c56cb4459
+		summarizeBy: sum
+		sourceColumn: Rating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Votes
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e08f80d-5333-4dee-901c-3c7a41798cc6
+		summarizeBy: sum
+		sourceColumn: Votes
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Revenue (Millions)'
+		dataType: double
+		lineageTag: d8c0abbe-0d43-4238-ba4d-6595f59bf3f2
+		summarizeBy: sum
+		sourceColumn: Revenue (Millions)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Metascore
+		dataType: int64
+		formatString: 0
+		lineageTag: ca6f2a6c-0027-4d12-92d1-bf683902dd30
+		summarizeBy: sum
+		sourceColumn: Metascore
+
+		annotation SummarizationSetBy = Automatic
+
+	column Genre
+		dataType: string
+		lineageTag: b3515eb7-fcab-4703-8a04-e48d05b86e6a
+		summarizeBy: none
+		sourceColumn: Genre
+
+		annotation SummarizationSetBy = Automatic
+
+	partition IMDB-Movie-Data = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Innomatics\Projects\Power BI\Dataset\IMDB-Movie-Data.csv"),[Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Use First Row as Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Change Type" = Table.TransformColumnTypes(#"Use First Row as Headers",{{"Rank", Int64.Type}, {"Title", type text}, {"Genre", type text}, {"Description", type text}, {"Director", type text}, {"Actors", type text}, {"Year", Int64.Type}, {"Runtime (Minutes)", Int64.Type}, {"Rating", type number}, {"Votes", Int64.Type}, {"Revenue (Millions)", type text}, {"Metascore", Int64.Type}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Change Type","","0",Replacer.ReplaceValue,{"Revenue (Millions)"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",{{"Revenue (Millions)", type number}}),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Changed Type", "Genre", Splitter.SplitTextByDelimiter(",", QuoteStyle.Csv), {"Genre.1", "Genre.2", "Genre.3"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Genre.1", type text}, {"Genre.2", type text}, {"Genre.3", type text}}),
+				    #"Trimmed Text" = Table.TransformColumns(#"Changed Type1",{{"Genre.1", Text.Trim, type text}, {"Genre.2", Text.Trim, type text}, {"Genre.3", Text.Trim, type text}}),
+				    #"Unpivoted Columns" = Table.UnpivotOtherColumns(#"Trimmed Text", {"Rank", "Title", "Description", "Director", "Actors", "Year", "Runtime (Minutes)", "Rating", "Votes", "Revenue (Millions)", "Metascore"}, "Attribute", "Value"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Unpivoted Columns",{{"Value", "Genre"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Attribute"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

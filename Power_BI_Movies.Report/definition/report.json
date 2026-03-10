@@ -1,0 +1,124 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.1.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY25SU12",
+      "reportVersionAtImport": {
+        "visual": "2.5.0",
+        "report": "3.1.0",
+        "page": "2.3.0"
+      },
+      "type": "SharedResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY25SU12",
+          "path": "BaseThemes/CY25SU12.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "diagram_(1)2729493006224857.png",
+          "path": "diagram_(1)2729493006224857.png",
+          "type": "Image"
+        },
+        {
+          "name": "good-feedback9394978308602787.png",
+          "path": "good-feedback9394978308602787.png",
+          "type": "Image"
+        },
+        {
+          "name": "growth6097408264145245.png",
+          "path": "growth6097408264145245.png",
+          "type": "Image"
+        },
+        {
+          "name": "flash2377732675023686.png",
+          "path": "flash2377732675023686.png",
+          "type": "Image"
+        },
+        {
+          "name": "Akatsuki-Logo9371544247687676.png",
+          "path": "Akatsuki-Logo9371544247687676.png",
+          "type": "Image"
+        },
+        {
+          "name": "diagram6532505601438697.png",
+          "path": "diagram6532505601438697.png",
+          "type": "Image"
+        },
+        {
+          "name": "good-feedback_(1)24107480289521055.png",
+          "path": "good-feedback_(1)24107480289521055.png",
+          "type": "Image"
+        },
+        {
+          "name": "good-feedback8395422430293209.png",
+          "path": "good-feedback8395422430293209.png",
+          "type": "Image"
+        },
+        {
+          "name": "growth_(1)9645445442649909.png",
+          "path": "growth_(1)9645445442649909.png",
+          "type": "Image"
+        },
+        {
+          "name": "growth9692914789545741.png",
+          "path": "growth9692914789545741.png",
+          "type": "Image"
+        },
+        {
+          "name": "flash_(1)7421253154984266.png",
+          "path": "flash_(1)7421253154984266.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

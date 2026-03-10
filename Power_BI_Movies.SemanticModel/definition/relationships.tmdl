@@ -1,0 +1,4 @@
+relationship AutoDetected_8e3e11fa-1b83-491e-9dfa-7d785193578f
+	fromColumn: IMDB-Movie-Data.Rank
+	toColumn: IMDB-Movie-Data_Org.Rank
+
