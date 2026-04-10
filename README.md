@@ -112,6 +112,7 @@ The dataset includes:
 ---
 
 ## 📁 Project Structure
+```
 IMDB-Movie-Analysis/
 │── IMDB_Dashboard.pbix
 │── dataset.csv
@@ -121,6 +122,7 @@ IMDB-Movie-Analysis/
 │   ├── top.png
 │   ├── correlation.png
 │── README.md
+```
 
 ---
 
@@ -132,10 +134,9 @@ IMDB-Movie-Analysis/
 
 ---
 
-## 🤝 Connect With Me
-**Aditya Kumar Lotti**  
-- Full Stack Developer | Data Enthusiast  
-- GitHub: https://github.com/your-username  
+## 🤝 Connect With Me 
+- GitHub: https://github.com/Adityasai1431
+- LinkedIn: https://www.linkedin.com/in/aditya-kumar-lotti-136122249/
 
 ---
 
