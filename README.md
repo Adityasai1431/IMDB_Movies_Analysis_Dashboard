@@ -113,7 +113,7 @@ The dataset includes:
 
 ## 📁 Project Structure
 ```
-IMDB-Movie-Analysis/
+IMDB_Movies_Analysis_Dashboard/
 │── IMDB_Dashboard.pbix
 │── dataset.csv
 │── images/
